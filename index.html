@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HBD DADA</title>
+<link rel="icon" href="image_icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+    --primary: #ff4b6e;
+    --bg: url(image.png);
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: var(--bg) no-repeat center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+.enveloppe, .lettre, .coeur {
+    will-change: transform;
+}
+
+/* Instruction */
+.instru {
+    position: absolute;
+    bottom: 15%;
+    color: rgb(80%, 0%, 0%);
+    font-size: 20px;
+    font-weight: bold;
+}
+
+@keyframes blink {
+    50% { opacity: 0.3; }
+}
+
+/* Enveloppe */
+.enveloppe-wrapper {
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.enveloppe-wrapper::before {
+    z-index: 3;
+}
+
+.enveloppe {
+    width: 360px;
+    height: 230px;
+    background: #fa6daf;
+    border-radius: 0px;
+    position: relative;
+}
+
+.lettre { z-index: 2; }
+.enveloppe::after { z-index: 1; background: var(--bg); }
+.enveloppe::before { z-index: 3; }
+
+.active .enveloppe::before {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+/* Rabat */
+.enveloppe::before {
+    content: "";
+    position: absolute;
+    border-top: 110px solid #ff9ac9;
+    border-left: 177px solid transparent;
+    border-right: 183px solid transparent;
+    border-radius: 0px;
+    transform-origin: top;
+    transition: 0.6s;
+    z-index: 3;
+}
+
+/* Lettre */
+.lettre {
+    position: absolute;
+    top: -100px;
+    bottom: 0;
+    left: 5px;
+    max-width: 348px;
+    max-height: 500px;
+    width: 100%;
+    height: 600px;
+    color: white;
+    background: #fa6daf;
+    padding: 5px -10px;
+    text-align: center;
+    font-family: 'Times new Roman', sans-serif;
+    font-size: 13px;
+    justify-content: center;
+    border-radius: 10px;
+    transform: translateY(20px);
+    transition: 0.6s ease;
+    opacity: 0;
+}
+
+.lettre::before {
+    position: absolute;
+    z-index: 0;
+    background: var(--bg);
+}
+
+/* Texte animé */
+.lettre p {
+    width: 100%;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.5s 0.4s;
+}
+
+.name {
+    font-family: italic;
+    font-size: 20px;
+    color: rgb(80%, 0%, 0%);
+}
+
+/* Coeur */
+.coeur {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    background: rgb(80%, 0%, 0%);
+    transform: translate(-50%, -50%) rotate(45deg);
+    animation: heartbeat 1s infinite;
+    z-index: 4;
+}
+
+.coeur::before,
+.coeur::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: rgb(80%, 0%, 0%);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.coeur::before { left: -25px; }
+.coeur::after { top: -25px; }
+
+@keyframes heartbeat {
+    0%,100% { transform: translate(-50%, -50%) rotate(45deg) scale(1); }
+    50% { transform: translate(-50%, -50%) rotate(45deg) scale(1.1); }
+}
+
+/* Etat actif */
+.active .enveloppe::before {
+    border-radius: 0px;
+    background: var(--bg);
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.active .lettre {
+    opacity: 1;
+    transform: translateY(-120px) scale(1.05);
+}
+
+.active .lettre p {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.active .coeur {
+    opacity: 0;
+}
+
+/* Confettis */
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    background: #fa6daf;
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    animation: fall linear forwards;
+}
+
+/* FOOTER */
+.footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    background: #0f172a;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
+
+/* Responsive */
+@media (max-width: 488px) {
+    .enveloppe {
+        width: 250px;
+        height: 170px;
+    }
+    .lettre {
+        width: 100%;
+        font-size: 11.5px;
+        justify-content: center;
+        align-items: center;
+        box-sizing: border-box;
+    }
+    .enveloppe::before {
+        border-left: 120px solid transparent;
+        border-right: 128px solid transparent;
+    }
+    .coeur {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50px;
+        height: 50px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="instru"></div>
+
+<div class="enveloppe-wrapper">
+    <div class="enveloppe"></div>
+
+    <div class="lettre">
+        <p>
+            <h2><i class="fa-graphite fa-thin fa-cake-candles" style="color: red;"></i> Joyeux Anniversaire ! <i class="fa-cake-candles" style="color: red;"></i></h2>
+                À ma sœur, mon guide et ma complice 
+            <br>
+            <br>
+                    Ma grande sœur adorée<br>
+            En ce jour si spécial qui marque ta naissance, je voulais<br>
+            prendre un moment pour te dire tout ce que j'ai du mal à <br>
+            exprimer entre deux rires ou deux taquineries<br>        <br>
+                Une présence irremplaçable                <br>
+            Tu n’es pas seulement ma grande sœur; tu es mon <br>
+            premier modèle, mon bouclier face aux tempêtes et celle <br>
+            qui connaît mes secrets sans que j'ai besoin de les dire.   <br>  <br>
+            Merci d’avoir ouvert la voie avec tant de grâce et de force.<br>
+            Ta détermination m'inspire chaque jour à devenir une <br>
+            meilleure version de moi-même.  <br>                        <br>
+            Pour cette nouvelle année de vie, je te souhaite :                              <br>
+                -   Une joie débordante qui illumine ton visage chaque <br>
+                matin.<br>
+                -   Des projets audacieux qui se réalisent au-delà de tes <br>
+                espérances.<br>
+                -   Un amour infini, celui que tu mérites pour la personne <br>
+                merveilleuse que tu es.<br><br>
+            <strong>Joyeux anniversaire Reine <br><div class="name">BOOSA MAWUENA JOSEPHINE</div></strong>
+        </p>
+    </div>
+
+    <div class="coeur"></div>
+</div>
+ <!-- FOOTER -->
+<div class="footer">
+        <p style="font-size: 10px;">© @Réalisé par BOSSA GHISLAIN REGIS JOSAPHAT@ ©</p>
+</div>
+
+<!-- SON -->
+<audio id="sound" src="https://www.myinstants.com/media/sounds/tada-fanfare.mp3"></audio>
+
+<script>
+const wrapper = document.querySelector(".enveloppe-wrapper");
+const sound = document.getElementById("sound");
+
+wrapper.addEventListener("click", () => {
+    wrapper.classList.toggle("active");
+    sound.play();
+    lancerConfettis();
+});
+
+/* Confettis */
+function lancerConfettis() {
+    for (let i = 0; i < 600; i++) {
+        let confetti = document.createElement("div");
+        confetti.className = "confetti";
+
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.background = `hsl(${Math.random()*360},100%,50%)`;
+        confetti.style.animationDuration = (2 + Math.random()*3) + "s";
+
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 7000);
+    }
+}
+</script>
+
+</body>
+</html>
